@@ -1,4 +1,4 @@
-package com.example.cryptoapp.presentation.components
+package com.example.cryptoapp.presentation.coin_list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,7 +31,7 @@ fun CoinListItem (
     ) {
         Text(
             text = "${coin.rank}. ${coin.name} (${coin.symbol})",
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.h3,
             overflow = TextOverflow.Ellipsis
         )
 
