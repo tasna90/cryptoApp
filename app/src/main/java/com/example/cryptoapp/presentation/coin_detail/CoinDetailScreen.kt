@@ -17,16 +17,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.cryptoapp.presentation.coin_detail.components.CoinTag
+import com.example.cryptoapp.presentation.coin_detail.components.EventListItem
 import com.example.cryptoapp.presentation.coin_detail.components.TeamListItem
+import com.example.cryptoapp.presentation.coin_detail.components.coin_basic.CoinDetailBasicViewModel
+import com.example.cryptoapp.presentation.coin_detail.components.coin_events.CoinDetailEventsViewModel
 import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun CoinDetailScreen(
-    viewModel: CoinDetailViewModel = hiltViewModel()
+    coinDetailBasicViewModel: CoinDetailBasicViewModel = hiltViewModel(),
+    coinDetailEventsViewModel: CoinDetailEventsViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
+    val coinDetailBasicState = coinDetailBasicViewModel.state.value
+    val coinDetailEventsState = coinDetailEventsViewModel.state.value
     Box(modifier = Modifier.fillMaxSize()) {
-        state.coin?.let { coin ->
+        coinDetailBasicState.coin?.let { coin ->
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(20.dp)
@@ -87,11 +92,28 @@ fun CoinDetailScreen(
                     )
                 Divider()
                 }
+
+                item {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    Text(
+                        text = "Events",
+                        style = MaterialTheme.typography.h2
+                    )
+                }
+                items(coinDetailEventsState.events) { event ->
+                    EventListItem(
+                        event = event,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                    )
+                }
             }
         }
-        if(state.error.isNotBlank()) {
+
+        if(coinDetailBasicState.error.isNotBlank()) {
             Text(
-                text = state.error,
+                text = coinDetailBasicState.error,
                 color = MaterialTheme.colors.error,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
@@ -100,7 +122,24 @@ fun CoinDetailScreen(
                     .align(Alignment.Center)
             )
         }
-        if(state.isLoading) {
+        if(coinDetailBasicState.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .align(Alignment.Center)
+            )
+        }
+        if(coinDetailEventsState.error.isNotBlank()) {
+            Text(
+                text = coinDetailBasicState.error,
+                color = MaterialTheme.colors.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .align(Alignment.Center)
+            )
+        }
+        if(coinDetailEventsState.isLoading) {
             CircularProgressIndicator(
                 modifier = Modifier
                     .align(Alignment.Center)

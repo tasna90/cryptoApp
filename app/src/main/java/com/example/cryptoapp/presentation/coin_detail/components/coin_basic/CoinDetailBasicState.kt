@@ -1,9 +1,8 @@
-package com.example.cryptoapp.presentation.coin_detail
+package com.example.cryptoapp.presentation.coin_detail.components.coin_basic
 
 import com.example.cryptoapp.domain.model.CoinDetail
-import com.example.cryptoapp.domain.model.CoinEvent
 
-data class CoinDetailState (
+data class CoinDetailBasicState (
     val isLoading: Boolean = false,
     val coin: CoinDetail? = null,
     val error: String = ""
