@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class CoinEventDto(
     val date: String,
     @SerializedName("date_to")
-    val dateTo: String,
+    val dateTo: String?,
     val description: String,
     val id: String,
     @SerializedName("is_conference")
@@ -20,6 +20,7 @@ data class CoinEventDto(
 fun CoinEventDto.toCoinEvent() : CoinEvent {
     return CoinEvent(
         date = date,
+        dateTo = dateTo ?: "",
         description = description,
         id = id,
         isConference = isConference,

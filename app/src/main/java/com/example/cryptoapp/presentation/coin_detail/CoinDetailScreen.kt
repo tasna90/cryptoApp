@@ -90,7 +90,7 @@ fun CoinDetailScreen(
                             .fillMaxWidth()
                             .padding(10.dp)
                     )
-                Divider()
+                    Divider()
                 }
 
                 item {
@@ -107,6 +107,7 @@ fun CoinDetailScreen(
                             .fillMaxWidth()
                             .padding(10.dp)
                     )
+                    Divider()
                 }
             }
         }
