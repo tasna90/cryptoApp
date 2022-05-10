@@ -6,7 +6,13 @@ import com.example.cryptoapp.data.remote.dto.CoinEventDto
 
 interface CoinRepository {
 
-    suspend fun getCoins() : List<CoinDto>
+    suspend fun getCoins(
+        currency: String,
+        order: String,
+        perPage: String,
+        page: String,
+        sparklineSwitch: String
+    ) : List<CoinDto>
 
     suspend fun getCoinById(coinId: String) : CoinDetailDto
 

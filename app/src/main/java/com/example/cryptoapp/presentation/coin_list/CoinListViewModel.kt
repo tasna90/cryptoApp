@@ -4,11 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.cryptoapp.common.Constants
 import com.example.cryptoapp.common.Resource
 import com.example.cryptoapp.domain.use_case.GetCoinsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,11 +22,27 @@ class CoinListViewModel @Inject constructor (
     val state: State<CoinListState> = _state
 
     init {
-        getCoins()
+        getCoins(
+            Constants.PARAM_CURRENCY,
+            Constants.PARAM_ORDER,
+            Constants.PARAM_PER_PAGE,
+            Constants.PARAM_PAGE,
+            Constants.PARAM_SPARKLINE_SWITCH)
     }
 
-    private fun getCoins() {
-        getCoinsUseCase().onEach { result ->
+    private fun getCoins(
+        currency: String,
+        order: String, perPage:
+        String, page: String,
+        sparklineSwitch: String
+    ) {
+        getCoinsUseCase(
+            currency,
+            order,
+            perPage,
+            page,
+            sparklineSwitch
+        ).onEach { result ->
             when(result) {
                 is Resource.Success -> {
                     _state.value = CoinListState(coins = result.data ?: emptyList())

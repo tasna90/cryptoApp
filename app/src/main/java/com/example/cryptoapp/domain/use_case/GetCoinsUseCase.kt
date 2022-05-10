@@ -14,10 +14,22 @@ class GetCoinsUseCase @Inject constructor (
     private val repository: CoinRepository
 ) {
 
-    operator fun invoke() : Flow<Resource<List<Coin>>> = flow {
+    operator fun invoke(
+        currency: String,
+        order: String,
+        perPage: String,
+        page: String,
+        sparklineSwitch: String
+    ) : Flow<Resource<List<Coin>>> = flow {
         try {
             emit(Resource.Loading<List<Coin>>())
-            val coins = repository.getCoins().map { it.toCoin() }
+            val coins = repository.getCoins(
+                currency,
+                order,
+                perPage,
+                page,
+                sparklineSwitch
+            ).map { it.toCoin() }
             emit(Resource.Success<List<Coin>>(coins))
         } catch (e: HttpException) {
             emit(Resource.Error<List<Coin>>(e.localizedMessage ?: "An unexpected error happened."))
